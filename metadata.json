@@ -1,0 +1,5 @@
+{
+  "name": "Tesseract Grid OS",
+  "description": "A spatial interface architecture where the navigation is the content. Features a live 2x2 expanding grid system with industrial design aesthetics.",
+  "requestFramePermissions": []
+}
