@@ -40,12 +40,27 @@ jobs:
         with:
           node-version: '22'
           cache: npm
+      - name: Require Cloudflare credentials
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || { echo "::error::Missing CLOUDFLARE_API_TOKEN repository secret"; exit 1; }
+          test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo "::error::Missing CLOUDFLARE_ACCOUNT_ID repository secret"; exit 1; }
       - name: Deploy with Wrangler
-        if: env.CLOUDFLARE_API_TOKEN != '' && env.CLOUDFLARE_ACCOUNT_ID != ''
         run: |
           npm ci
           npm run build
           npx --yes wrangler@4.45.0 deploy
-      - name: Cloudflare credentials not configured
-        if: env.CLOUDFLARE_API_TOKEN == '' || env.CLOUDFLARE_ACCOUNT_ID == ''
-        run: echo "::notice::Add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID repository secrets to enable deployment."
+      - name: Production smoke test
+        env:
+          BASE_URL: https://tesseract-grid-os.averymiddlebrook2014.workers.dev
+        run: |
+          set -euo pipefail
+          echo "Checking deployed HTML..."
+          curl --retry 12 --retry-delay 3 --retry-all-errors --max-time 15 --fail-with-body -sS "$BASE_URL/" -o /tmp/tesseract-home.html
+          grep -q "Tesseract" /tmp/tesseract-home.html
+          echo "Checking deployed Worker health..."
+          curl --retry 12 --retry-delay 3 --retry-all-errors --max-time 15 --fail-with-body -sS "$BASE_URL/api/health" -o /tmp/tesseract-health.json
+          node -e "const h=require('/tmp/tesseract-health.json'); if (h.status !== 'ok' || h.service !== 'Tesseract Edge') process.exit(1); console.log('Health OK:', h.edge);"
+          echo "Checking live event processing..."
+          curl --retry 5 --retry-delay 3 --retry-all-errors --max-time 15 --fail-with-body -sS -X POST "$BASE_URL/api/pipeline/run" -H 'Content-Type: application/json' --data '{"event":{"id":"ci-smoke","source":"github-actions","type":"deployment.smoke","severity":"critical","message":"Smoke test"}}' -o /tmp/tesseract-run.json
+          node -e "const r=require('/tmp/tesseract-run.json'); if (r.score !== 95 || r.route !== 'priority-alerts' || r.trace?.length !== 4) process.exit(1); console.log('Pipeline OK:', r.runId);"
+          echo "All production smoke tests passed."
