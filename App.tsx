@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import {
   Activity, ArrowDownToLine, ArrowRight, ArrowUpRight, BarChart3, Check,
   ChevronRight, CircleAlert, Cloud, Code2, Database, Gauge, GitBranch,
@@ -53,7 +53,7 @@ function severityClass(value: string): string {
   return 'severity severity-' + (['low', 'medium', 'high', 'critical'].includes(value) ? value : 'low');
 }
 function Panel({ title, eyebrow, children, action, className = '' }: {
-  title: string; eyebrow?: string; children: React.ReactNode; action?: React.ReactNode; className?: string;
+  title: string; eyebrow?: string; children: ReactNode; action?: ReactNode; className?: string;
 }) {
   return <section className={'panel ' + className}>
     <div className="panel-heading"><div><p className="eyebrow">{eyebrow || 'CONTROL MODULE'}</p><h3>{title}</h3></div>{action}</div>
