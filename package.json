@@ -1,12 +1,16 @@
 {
   "name": "tesseract-grid-os",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "vite --host 0.0.0.0",
+    "dev:edge": "npm run build && npx --yes wrangler@4.45.0 dev",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test tests/*.test.js",
+    "deploy": "npm run build && npx --yes wrangler@4.45.0 deploy"
   },
   "dependencies": {
     "react": "^19.2.1",

@@ -1,123 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tesseract Grid OS</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
-            },
-            colors: {
-              ind: {
-                bg: '#121212',        // Matte Carbon
-                surface: '#1E1E1E',   // Tungsten
-                panel: '#252525',     // Lighter Panel
-                stroke: '#333333',    // Mechanical Border
-                text: '#E0E0E0',      // Off-White
-                muted: '#666666',     // Industrial Grey
-                orange: '#FF3B00',    // International Orange / Safety
-                blue: '#0055FF',      // Blueprint Blue
-              }
-            },
-            backgroundImage: {
-              'grid-pattern': 'linear-gradient(to right, #222 1px, transparent 1px), linear-gradient(to bottom, #222 1px, transparent 1px)',
-            },
-            boxShadow: {
-              'hard': '4px 4px 0px rgba(0,0,0,0.5)',
-              'inset': 'inset 0 2px 4px rgba(0,0,0,0.5)',
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-      body {
-        background-color: #121212;
-        color: #E0E0E0;
-        font-family: 'Inter', sans-serif;
-        overflow: hidden;
-      }
-      
-      /* Industrial Utilities */
-      .ind-border {
-        border: 1px solid #333333;
-      }
-
-      .tech-grid {
-        background-size: 40px 40px;
-        background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                          linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      }
-      
-      .screw {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #2A2A2A;
-        border: 1px solid #444;
-        position: relative;
-        box-shadow: inset 1px 1px 2px rgba(0,0,0,0.8);
-      }
-      .screw::after {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 60%;
-        height: 1px;
-        background: #111;
-        transform: translate(-50%, -50%) rotate(45deg);
-      }
-      .screw::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 60%;
-        height: 1px;
-        background: #111;
-        transform: translate(-50%, -50%) rotate(-45deg);
-      }
-
-      /* Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #1E1E1E;
-        border-left: 1px solid #333;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #444; 
-        border: 1px solid #333;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #FF3B00;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.1/",
-    "react": "https://aistudiocdn.com/react@^19.2.1",
-    "recharts": "https://aistudiocdn.com/recharts@^3.5.1",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.1/",
-    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.556.0",
-    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.25"
-  }
-}
-</script>
-<link rel="stylesheet" href="/index.css">
-</head>
+    <meta name="theme-color" content="#0a101b" />
+    <meta name="description" content="Tesseract — a Cloudflare-native operational control plane for event processing and edge diagnostics." />
+    <title>Tesseract — Edge Control Plane</title>
+  </head>
   <body>
     <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
-</body>
+    <script type="module" src="/index.tsx"></script>
+  </body>
 </html>
